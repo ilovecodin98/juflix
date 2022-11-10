@@ -4,6 +4,7 @@ import App from "./App";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { theme } from "./theme";
 import { RecoilRoot } from "recoil";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const GolbalStyle = createGlobalStyle`
 
@@ -61,6 +62,10 @@ table {
 }
 body {
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: ${(props) => props.theme.white.darker};
+  line-height: 1.2;
+  background-color: black;
 }
 a {
   text-decoration: none;
@@ -69,14 +74,18 @@ a {
 
 `;
 
+const client = new QueryClient();
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <RecoilRoot>
-    <ThemeProvider theme={theme}>
-      <GolbalStyle />
-      <App />
-    </ThemeProvider>
+    <QueryClientProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <GolbalStyle />
+        <App />
+      </ThemeProvider>
+    </QueryClientProvider>
   </RecoilRoot>
 );
